@@ -238,3 +238,29 @@ JSON Web Token
 - Força bruta
 - Dicionário
 - Rainbow table
+
+# AULA 06 - FATORES HUMANOS
+
+- É preciso aplicar práticas mais transparentes e que não prejudiquem o cotidiano e a função do usuário ao executar as tarefas.
+
+```
+    Segurança e conveniência
+    Requisitos da senha?
+    Múltiplos fatores?
+    Bibliotecas?
+    Preciso de uma senha?
+```
+
+- Em um cenário em que precisamos fazer, por exemplo, um sistema que requer autenticação temos vários requisitos de senhas que podemos implementar, possuir múltiplos fatores de autenticação, podemos nos perguntar se vamos usar alguma biblioteca ou até se ter uma senha em si é realmente fundamental, se não há outras soluções.
+
+- Precisamos considerar todos esses pontos. Referente aos requisitos de uma senha, quando alguém vai dar entrada em uma senha, podemos discutir alguns requisitos bem comuns que existem e parar para pensar de forma mais crítica sobre eles.
+
+- Por exemplo, suponhamos que temos que possuir algum requisitos para o usuário cadastrar uma senha, como:
+
+```
+    Ter entre 8 e 25 caracteres;
+    Pelo menos uma letra minúscula;
+    Pelo menos uma letra maiúscula;
+    Pelo menos um número;
+    Pelo menos um caractere especial (!@#$%).
+```
