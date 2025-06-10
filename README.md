@@ -98,3 +98,7 @@
     - Ela foi projetada para aplicações como verificação de integridade de arquivos, autenticação de mensagens e geração de dados para assinaturas digitais criptográficas. O BLAKE3 não foi projetado para hash de senhas, pois visa calcular hashes o mais rápido possível (para senhas, é recomendável utilizar as funções bcrypt, scrypt ou Argon2).
 
     - O tamanho da saída padrão do BLAKE3 é 256 bits.
+
+## HASH COM SAL
+
+- Combinar um segundo valor ao principal
