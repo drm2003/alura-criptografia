@@ -1,5 +1,14 @@
 # alura-criptografia
 
+# Links
+
+- Documentação oficial: https://nodejs.org/api/crypto.html#crypto_crypto_createcipheriv_algorithm_key_iv_options
+- JWT: https://jwt.io
+- https://token.dev/
+- https://cursos.alura.com.br/extra/alura-mais/o-que-e-json-web-token-jwt--c203
+- https://www.alura.com.br/artigos/o-que-e-json-web-tokens
+- https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Cookies#cookies_secure_e_httponly
+
 # AULA 01
 
 ## AUTORIZAÇÃO E AUTENTICAÇÃO
@@ -102,3 +111,130 @@
 ## HASH COM SAL
 
 - Combinar um segundo valor ao principal
+
+# AULA 03 - CHAVES
+
+## Encriptação simétrica
+
+- Vamos supor que temos uma mensagem e utilizaremos um algoritmo de encriptação que vai precisar ter como parâmetro uma chave compartilhada. Tanto a pessoa que está enviando a informação quanto a que está recebendo precisa ter acesso à chave.
+
+- Na encriptação usaremos a chave para criar uma informação embaralhada e no momento em que outra pessoa receber, ela vai utilizar a mesma chave no algoritmo para decifrar a mensagem. Chamamos de chave compartilhada, pois, ambas precisam ter acesso, tanto para cifrar quanto para decifrar o dado.
+
+## Encriptação Assimétrica
+
+- A partir dessa problemática que vamos lidar com o conceito de encriptação assimétrica.
+
+- O que é?
+
+  - Ao invés de utilizarmos apenas uma chave compartilhada pelas partes, teremos uma chave pública, que vai servir somente para codificar a informação. E uma chave privada, que vai ser responsável pela desencriptação do dado.
+
+- A chave pública pode ser compartilhada A chave privada não pode ser compartilhada
+
+- Com as funções separadas é possível enviar a chave pública para várias pessoas e elas encriptarem essa informação e nós recebermos a transmissão dessa informação e usarmos a chave privada para decriptar.
+
+## Métodos utilizados
+
+### Método crypto.createCipheriv()
+
+- O método crypto.createCipheriv() funciona como uma interface embutida no módulo crypto que retorna um objeto Cipher com os parâmetros do algoritmo, a chave e o vetor de inicialização (iv - do inglês “Initialization Vector”).
+
+- A sintaxe é:
+
+```
+    crypto.createCipheriv(algoritmo, chave, iv, opcoes)
+```
+
+- Percebemos então que o método aceita quatro parâmetros:
+
+  - algoritmo: é um dado do tipo string que está interligado com a biblioteca de implementação dos protocolos SSL e TLS, a OpenSSL . Alguns dos exemplos foram utilizados no curso, como aes256 ou rsa. Nas versões mais recentes da OpenSSL o comando no terminal openssl list -cipher-algorithms mostra os algoritmos de cifra disponíveis.
+  - chave (key): é a chave bruta usada pelo algoritmo e vetor de inicialização. A chave pode ser um KeyObject ou do tipo secret.
+  - iv: o vetor de inicialização que é responsável por fornecer um estado inicial. O iv precisa ser único ou imprevisível. O ideal é que seja criptografado de forma aleatória e não precisa ser secreto. Caso não necessite de um vetor de inicialização, o iv pode ser do tipo null.
+  - options (opções): o último parâmetro é um argumento opcional, que pode alterar o modo de operação da função, definindo algumas configurações específicas.
+
+### Método crypto.createDecipheriv()
+
+- O método crypto.createDecipheriv() funciona de forma bem similar ao createCipheriv(). No entanto, a interface retorna um objeto Decipher e os parâmetros são os mesmos. Sua sintaxe é:
+
+```
+    crypto.createDecipheriv( algoritmo, chave, iv, opcoes)
+```
+
+### Método crypto.generateKeyPairSync()
+
+- O método crypto.generateKeyPairSync() também funciona como uma interface do módulo crypto. Porém, cria um novo e assimétrico par de chaves do tipo especificado que retorna um objeto com uma private key e public key que pode ser uma string, buffer ou KeyObject. Sua sintaxe é:
+
+```
+    crypto.generateKeyPairSync( type, options)
+```
+
+- O método aceita dois parâmetros, que são:
+
+  - type (tipo): É do tipo string e deve incluir um ou mais dos seguintes algoritmos: ‘rsa’, ‘dsa’, ‘ec’, ‘ed25519’, ‘ed448’, ‘x25519’, ‘x448’, ou ‘dh’.
+  - options (opções): É do tipo objeto. Ele pode conter os parâmetros modulusLength; publicExponent; divisorLength; namedCurve; prime; primeLength; generator; groupName; publicKeyEncoding; privateKeyEncoding.
+
+## PGP (Pretty Good Privacy)
+
+- Pretty Good Privacy (PGP), em português “privacidade muito boa”, é um sistema de criptografia utilizado para enviar e-mails criptografados e criptografar arquivos confidenciais.
+
+- A criptografia PGP utiliza uma combinação de duas formas de criptografia: criptografia de chave simétrica e criptografia de chave pública, em conjunto com combinação serial de hashing e compressão de dados, e cada passo utiliza algum dos vários algoritmos suportados. PGP usa uma chave privada que deve ser mantida secreta e uma chave pública que o receptor e remetente têm que compartilhar quando trocam mensagens.
+
+- O PGP ainda é seguro?
+
+  - É impossível dizer que qualquer método de criptografia específico é 100% seguro. Dito isto, o PGP é geralmente considerado extremamente seguro. O sistema de duas chaves, as assinaturas digitais e o fato de o PGP ser de código aberto e ter sido fortemente examinado pelo público contribuem para sua reputação como um dos melhores protocolos de criptografia.
+
+# AULA 04 - Criptografias e tokens JWT
+
+## Assinatura
+
+- Validar a autoria do documento
+
+## SESSÕES E TOKEN
+
+- Quantidade de tempo em que o usuário está autenticado e conectado a um serviço ou um sistema.
+
+## TOKEN JWT (JSON WEB TOKEN)
+
+- O JWT (JSON Web Token) é um token que usa a anotação do JSON para armazenar as informações e guarda o dado de forma parecida com os Objetos no JavaScript.
+
+JSON Web Token
+
+```
+    "O JWT é um padrão aberto que define uma forma segura de transmitir informação entre duas partes como um objeto JSON. Essa informação pode ser verificada e confiada, pois foi assinada digitalmente."
+```
+
+- Mas, afinal, como vamos usar esse token? Ele pode estar codificado e decodificado. O corpo desse token decodificado vai ser constituído de três partes: cabeçalho (Header), dados (payload) e assinatura.
+
+- https://jwt.io
+
+## Encriptar x codificar
+
+- Uma informação muito importante que precisamos saber é que não necessariamente todos os tokens são criptografados. O cabeçalho e payload de um Token JWT comum passa apenas por uma codificação em base64, ou seja, ele é reescrito em um formato mais compacto, mas que pode ser facilmente retornado ao seu conteúdo original.
+
+- Ou seja, a assinatura nesse contexto apenas contribui para verificarmos a autenticidade e integridade do token. Então guardamos a chave secreta para que outras pessoas não possam assinar os tokens, e não para que não seja possível ler o conteúdo em si.
+
+- Um teste que você pode realizar é criar um token em uma plataforma como o jwt.io e depois copiar e colar o seu conteúdo em um outro site para ler qual o conteúdo está salvo naquele JWT sem fornecer a senha secreta da assinatura, como no site token.dev.
+
+## Para saber mais: onde guardar o token JWT?
+
+- As maneiras mais fáceis de armazenar um token JWT no lado do cliente são o localStorage e o sessionStorage.
+
+- A maioria das pessoas tende a armazenar seus JWTs no localStorage do navegador web, porém essa tática deixa seus aplicativos abertos a um ataque chamado XSS. Nesse tipo de ataque, um invasor aproveita o fato de que o armazenamento local é acessível por qualquer código JavaScript executado no mesmo domínio da aplicação. Assim, por exemplo, se o invasor encontrar uma maneira de injetar código JavaScript mal-intencionado em seu aplicativo, seu token JWT estará imediatamente disponível para eles. Portanto, se deseja segurança em suas aplicações, não armazene um JWT no localStorage.
+
+- Mas e no sessionStorage? Assim como o localStorage, o armazenamento de sessão é acessível por qualquer código JavaScript executado no mesmo domínio em que o seu aplicativo está hospedado. Portanto, a única diferença entre os dois é que no sessionStorage, quando um usuário fecha o navegador, o JWT desaparecerá e o usuário terá que fazer login novamente em sua próxima visita ao aplicativo web. Portanto, evite também armazenar um JWT no sessionStorage.
+
+- A forma mais segura, se bem implementada, é utilizar cookie httpOnly para armazenar tokens JWT. Este é um tipo especial de cookie que é enviado apenas em solicitações HTTP para o servidor. Nunca é acessível (tanto para leitura quanto para escrita) a partir do JavaScript em execução no navegador e pode ter uma data de expiração definida.
+
+- Então, para manter tokens JWT seguros, é recomendável utilizar cookies httpOnly.
+
+# AULA 05 - Algoritmos criptográficos
+
+## Algoritmos criptográficos
+
+- O significado de 'SHA256'
+- O nome "SHA256" representa o algoritmo criptográfico que está sendo utilizado.
+
+## Tipos de ataque
+
+- Força bruta
+- Dicionário
+- Rainbow table
